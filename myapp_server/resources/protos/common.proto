@@ -1,0 +1,393 @@
+syntax = "proto3";
+
+// Sun Jiayuan
+
+package Yikun.Api.Common;
+
+// empty
+message Empty {
+}
+
+enum Priority {
+    ENPENDING     = 0;
+    IMMEDIATELY = 1;
+}
+
+// string
+message ProtoString {
+  string data = 1;
+}
+
+// state
+enum StateEnum {
+  PENDING   = 0;
+  ACTIVE    = 1;
+  PREEMPTED = 2;
+  SUCCEEDED = 3;
+  ABORTED   = 4;
+  REJECTED  = 5;
+  PREEMPTING= 6;
+  RECALLING = 7;
+  RECALLED  = 8;
+  LOST      = 9;
+}
+
+enum RobotStateEnum {
+  UNKNOWN       = 0;
+  SHUT_DOWN     = 1;
+  SLEEP         = 2;
+  IDLE          = 3;
+  REMOTE        = 4;
+  CHARGING      = 5;
+  MAPPING       = 6;
+  INTERACTION   = 7;
+  UPGRADE       = 8;
+  FOLLOW        = 9;
+  CALL_UP       = 10;
+  END_FOLLOW    = 11;
+  EMERGENCY_STOP      = 12;
+  SWITCH_MAP          = 13;
+  SWITCH_MAP_COMPLETE = 14;
+
+  // charge
+  NAVIGATE_TO_CHARGE_STATION  = 41;
+  FINDING_CHARGE_STATION      = 42;
+  MOVE_TO_CHARGE_STATION      = 43;
+  IS_CHARGING   = 44;
+  CHARGE_ERROR  = 45;
+
+  // navigation
+  PlANNING        = 51;
+  NAVIGATING      = 52;
+  NAVI_COMPLETE   = 53;
+  NAVI_ERROR      = 54;
+}
+
+// level
+enum LevelEnum {
+  OK    = 0;
+  WARN  = 1;
+  ERROR = 2;
+  STALE = 3;
+}
+
+// submap
+enum SubMapEnum {
+  CENTER     = 0;
+  LEFT_UP    = 1;
+  LEFT_DOWN  = 2;
+  RIGHT_UP   = 3;
+  RIGHT_DOWN = 4;
+}
+
+// map
+message ProtoMap {
+  string map          = 1; // 地图，base64编码, png
+  string sub_map      = 2;
+  float origin_x      = 3; // 起始点坐标（m）
+  float origin_y      = 4;
+  float origin_theta  = 5; // 角度（degree）
+  float resolution    = 6; // 分辨率
+  int32 width         = 7;
+  int32 height        = 8;
+  int32 position      = 9; // SubMapEnum
+  int32 map_id        = 10;
+}
+
+//
+message CommandFeedback {
+  uint32 status = 1;
+}
+
+// robot pose (2D)
+message Pose {
+  string frame  = 1; // 参考坐标系, e.g. "map", is optional.
+  float x       = 2;
+  float y       = 3;
+  float orientation   = 4; // 方向（degree）
+}
+
+// point 2D
+message Point2D {
+  float x = 1;
+  float y = 2;
+}
+
+message PoseRequest {
+  int32 retries   = 1; // 尝试次数
+  float timeout   = 2; // 尝试时间
+  Pose pose       = 3; // 位置
+}
+
+//waypoint (2D)
+message Waypoint {
+  repeated Pose pose = 1;
+}
+
+message WaypointRequest {
+  int32 retries     = 1; // every point
+  float timeout     = 2; // waypoint
+  Waypoint waypoint = 3;
+}
+
+// twist
+message VelocityCommand {
+  float lin = 1; // 线速度 (m/s)
+  float ang = 2; // 角速度 (degree/s)
+}
+
+//
+message RobotState {
+  int32 state = 1; // RobotStateEnum
+}
+
+//
+message NetDevice {
+  string name = 1;
+}
+
+//
+message RobotInfo {
+  Pose pose                 = 1;
+  VelocityCommand vel       = 2;
+  float distance            = 3; // odometry（m)
+  int32 battery             = 4; // percent
+  int32 map_id              = 5;
+  string map_uid            = 6; // UID
+}
+
+// int
+message ProtoInt {
+  int32 data = 1;
+}
+
+// bool
+message ProtoBool {
+  bool data = 1;
+}
+
+// float
+message ProtoFloat {
+  float data = 1;
+}
+
+//
+message SaveMap {
+  bool save         = 1; // true: 保存；false: 不保存
+  int32 session_id  = 2;
+  string name       = 3;
+  float orientation = 4;
+}
+
+message RelativeMoveRequest {
+  float x                   = 1; // 直线移动距离（m）
+  float y                   = 2; // 未使用
+  float orientation         = 3; // 转动角度（degree）
+  float maxlinearspeed      = 4; // 最大线速度（m/s）
+  float maxangularspeed     = 5; // 最大角速度（degree/s）
+  int32 collisiondetection  = 6; // 是否开启碰撞检测（0: false; 1: true）
+  float timeout             = 7; // 请求超时
+}
+
+message Dock {
+  Pose pose                 = 1;
+  float offset_x            = 2;
+  float offset_y            = 3;
+  float offset_orientation  = 4;
+}
+
+//
+message Diagnostic
+{
+  int32 id            = 1;
+  string name         = 2;
+  string hardware_id  = 3;
+  int32 level         = 4; // LevelEnum
+  string msg          = 5;
+  string first_time   = 6;
+  string last_time    = 7;
+}
+
+message DiagnosticArray {
+  repeated Diagnostic diagnostics = 1;
+}
+
+message Backup {
+  string name     = 1;
+  string version  = 2;
+}
+
+message BackupsList {
+  repeated Backup backups = 1;
+}
+
+// people
+message PeopleMeasurement {
+  float x           = 1;
+  float y           = 2;
+  float z           = 3; // 机器人正前方距离
+  float distance    = 4;
+}
+
+message Timestamp {
+  uint32 sec  = 1; //epoch in seconds since 1970
+  uint32 usec = 2; //microseconds after the second (0-999999)
+}
+
+message TimestampStr {
+  string time = 1; //sec.usec
+}
+
+message Device {
+  int32 id            = 1;
+  string name         = 2;
+  string description  = 3;
+  string ip           = 4;
+  string port         = 5;
+  int32 type          = 6;
+  bool active         = 7;
+  float rrt           = 8;
+  bool read_only      = 9;
+}
+
+message DeviceList {
+  repeated Device device = 1;
+}
+
+message Position {
+  int32 pos_id      = 1;
+  string name       = 2;
+  float pos_x       = 3;
+  float pos_y       = 4;
+  float orientation = 5;
+  int32 type        = 6;
+  int32 map_id      = 7;
+  int32 parent_id   = 8;
+  float offset_x    = 9;
+  float offset_y    = 10;
+  string uuid       = 11;
+}
+
+message Map {
+  int32 id            = 1;
+  int32 session_id    = 2;
+  string name         = 3;
+  string web_map      = 4;
+  string nav_map      = 5;
+  float resolution    = 6;
+  float origin_x      = 7;
+  float origin_y      = 8;
+  float origin_theta  = 9;
+  int32 width         = 10;
+  int32 height        = 11;
+  string uuid         = 12;
+}
+
+message Action {
+  int32 id            = 1;
+  string name         = 2;
+  string description  = 3;
+  int32 map_id        = 4;
+  int32 session_id    = 5;
+  string uuid         = 6;
+}
+
+message PositionList {
+  repeated Position position = 1;
+}
+
+message MapList {
+  repeated Map map = 1;
+}
+
+message ActionList {
+  repeated Action action = 1;
+}
+
+//Sound
+message SoundCommand {
+  string name       = 1;
+  float duration    = 2;
+  float volume      = 3; // 0.0 ~ 1.0 (0~100%)
+  string wave       = 4;
+  string format     = 5;
+}
+
+// laser
+message LaserScan {
+  string frame_id   = 1;
+  double stamp      = 2;
+  float angle_min   = 3;
+  float angle_max   = 4;
+  float angle_increment = 5;
+  float time_increment  = 6;
+  float scan_time = 7;
+  float range_min = 8;
+  float range_max = 9;
+  repeated float ranges      = 10;  // m
+  repeated float intensities = 11;
+}
+
+// laser pointcloud
+message PointCloudXY {
+  double stamp              = 1;
+  repeated Point2D points   = 2;
+}
+
+// Network Configuration
+message NetworkConfiguration
+{
+  string device  = 1;
+  string ssid    = 2;
+  string ipv4    = 3;
+  string netmask = 4;
+  string broadcast = 5;
+}
+
+//
+message WiFiNetworkSecurity {
+  string ssid       = 1; // SSID
+  string password   = 2; // PASSWORD
+}
+
+// Available Wi-Fi network
+message WiFiNetwork {
+  string name   = 1; // NAME
+  string ssid   = 2; // SSID
+  int32 chan    = 3; // CHAN
+  int32 signal  = 4; // SIGNAL
+  string device = 5; // DEVICE
+  string active = 6; // ACTIVE, "yes" or "no"
+  bool in_use   = 7; // IN_USE
+}
+message WiFiNetworkList {
+  repeated WiFiNetwork networks = 1;
+}
+
+// Available Wi-Fi connection
+message WiFiConnection {
+  string name   = 1;
+  string uuid   = 2;
+  string type   = 3;
+  string state  = 4;
+  string active = 5; // ACTIVE, "--" or "activated"
+  double timestamp = 6;
+}
+message WiFiConnectionList {
+  repeated WiFiConnection connections = 1;
+}
+
+// Lane
+message Lane {
+  int32 map_id      = 1;
+  string frame_id   = 2; // optional
+  repeated Point2D points = 3;
+}
+
+// Robot Config
+message RobotConfig {
+  bool value_check  = 1; // 不更新=0, 更新=1
+  int32 clear_obstacle_retries  = 2; // 清除障碍物重试次数
+  double max_nav_vel            = 3; // 最大导航速度 [m/s]
+  string result                 = 4;
+}

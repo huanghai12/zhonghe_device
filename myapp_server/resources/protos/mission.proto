@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+// Sun Jiayuan
+
+import "common.proto";
+
+package Yikun.Api.Mission;
+
+message MissionFeedback {
+  string taskid = 1;
+  int32 status  = 2; // Yikun.Api.Common.StateEnum
+}
+
+//Move To Known Position
+message KnownPositionRequest {
+  int32 priority    = 1;
+  int32 position    = 2;
+  int32 retries     = 3;
+  double threshold  = 4;
+}
+
+//Move To Position
+message PositionRequest {
+  int32 priority    = 1;
+  float x           = 2;
+  float y           = 3;
+  float orientation = 4;
+  int32 type        = 5;
+  float offset_x    = 6;
+  float offset_y    = 7;
+  int32 retries     = 8;
+  double threshold  = 9;
+}
+
+//Relative Move
+message RelativeMoveRequest {
+  int32 priority            = 1;
+  float x                   = 2;
+  float y                   = 3;
+  float orientation         = 4;
+  float maxlinearspeed      = 5;
+  float maxangularspeed     = 6;
+  int32 collisiondetection  = 7;
+}
+
+//Switch Map
+message SwitchMapRequest {
+  int32 priority    = 1;
+  string map        = 2;
+  float x           = 3;
+  float y           = 4;
+  float orientation = 5;
+}
+//
+message WaitDIRequest {
+  int32 priority  = 1;
+  string device   = 2;
+  int32 port      = 3;
+  int32 value     = 4;
+  float timeout   = 5;
+}
+//
+message SetDORequest {
+  int32 priority    = 1;
+  string device     = 2;
+  int32 port        = 3;
+  int32 value       = 4;
+}
+
+//Run UR program
+message URCommand {
+  int32 priority  = 1;
+  int32 device    = 2;
+  int32 command   = 3;
+  string value    = 4;
+  float duration  = 5;
+}
+
+//Load Mission List
+message MissionIdentifier {
+  int32 priority  = 1;
+  string id       = 2;
+}
+
+//GetMissionLog
+message MissionLogCommand {
+  string taskid  = 1;
+  int32 iterator = 2;
+}
+
+message MissionLogFeedback {
+  int32 iterator      = 1;
+  int32 queue_id      = 2;
+  string level        = 3;
+  string info         = 4;
+  string state        = 5;
+  Yikun.Api.Common.TimestampStr timestamp = 6;
+}
+
+enum ConstAction {
+  UNKNOWN           = 0;
+  MOVE_TO_KNOWN_POSITION = 1;
+  MOVE_TO_POSITION  = 2;
+  RELATIVE_MOVE     = 3;
+  SWITCH_MAP        = 4;
+  WAIT_FOR_DI       = 5;
+  SET_DO            = 6;
+  RUN_UR_PROGRAM    = 7;
+}

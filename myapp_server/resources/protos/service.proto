@@ -1,0 +1,222 @@
+syntax = "proto3";
+
+// Sun Jiayuan
+
+import "common.proto";
+import "mission.proto";
+
+package Yikun.Api.ServiceRpc;
+
+service Rpc {
+  // Check
+  // @return Common.StateEnum
+  rpc CheckCommunication (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=0
+
+  // Get map
+  rpc GetCurrentMap (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.ProtoMap);// @RPC_ID=1
+
+  // Get robot pose
+  rpc GetRobotPose (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.Pose);// @RPC_ID=2
+
+  // Make map
+  // @return Common.StateEnum
+  rpc MakeMap (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=3
+
+  // Exit make map
+  // @return Common.StateEnum
+  rpc MakeMapExit (Yikun.Api.Common.SaveMap) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=4
+
+  // Get robot info
+  rpc GetRobotInfo (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.RobotInfo);// @RPC_ID=5
+
+  // Set network configuration
+  // @return current configuration
+  rpc SetNetworkConfiguration (Yikun.Api.Common.NetworkConfiguration) returns (Yikun.Api.Common.NetworkConfiguration);// @RPC_ID=6
+
+  // Get network configuration
+  // @input network device
+  // @return current device configuration
+  rpc GetNetworkConfiguration (Yikun.Api.Common.NetworkConfiguration) returns (Yikun.Api.Common.NetworkConfiguration);// @RPC_ID=7
+
+  // Robot state
+  rpc GetRobotState (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.RobotState);// @RPC_ID=8
+
+  // Auto charge
+  rpc AutoCharge (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.Empty);// @RPC_ID=9
+
+  // Manual charge
+  // @return Common.StateEnum
+  rpc ManualCharge (Yikun.Api.Common.Dock) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=10
+
+  // Move to position
+  // @return Common.StateEnum
+  rpc MoveToPosition (Yikun.Api.Common.PoseRequest) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=11
+
+  // Set waypoint
+  // @return Common.StateEnum
+  rpc SetWaypoint (Yikun.Api.Common.WaypointRequest) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=12
+
+  // Callup
+  // @return Common.StateEnum
+  rpc CallUp (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=13
+
+  // Nav pause
+  // @return Common.StateEnum
+  rpc NavPause (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=14
+
+  // Nav cancel
+  // @return Common.StateEnum
+  rpc NavCancel (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=15
+
+  // Nav start
+  // @return Common.StateEnum
+  rpc NavWakeUp (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=16
+
+  // Follow start
+  // @return Common.StateEnum
+  rpc FollowStart (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=17
+
+  // Follow stop
+  // @return Common.StateEnum
+  rpc FollowStop (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=18
+
+  // Twist (velocity command)
+  // @return Common.StateEnum
+  rpc Twist (Yikun.Api.Common.VelocityCommand) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=19
+
+  // Ipv4
+  rpc GetIpv4Address (Yikun.Api.Common.NetDevice) returns (Yikun.Api.Common.ProtoString);// @RPC_ID=20
+
+  // Get navigation map
+  rpc GetNavMap (Yikun.Api.Common.ProtoInt) returns (Yikun.Api.Common.ProtoMap);// @RPC_ID=21
+
+  // Get navigation status
+  // @return Common.StateEnum
+  rpc GetNavStatus (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// RPC_ID=22
+
+  // Dignostics
+  rpc GetDiagnosticArray (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.DiagnosticArray);// RPC_ID=23
+
+  // Backups list
+  rpc GetBackupsList (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.BackupsList);// RPC_ID=24
+
+  // Restore software
+  // @return Common.StateEnum
+  rpc SoftwareRestore (Yikun.Api.Common.Backup) returns (Yikun.Api.Common.CommandFeedback);// RPC_ID=25
+
+  // Software version
+  rpc SoftwareVersion (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.ProtoString);// RPC_ID=26
+
+  // Upgrade
+  // @return Common.StateEnum
+  rpc SoftwareUpgrade (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// RPC_ID=27
+
+  // People
+  rpc GetPeopleMeasurement (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.PeopleMeasurement);// RPC_ID=28
+
+  // Set pose
+  // @return Common.StateEnum
+  rpc SetRobotPose (Yikun.Api.Common.Pose) returns (Yikun.Api.Common.CommandFeedback);// RPC_ID=29
+
+  // Interaction interrupt
+  // @return Common.StateEnum
+  rpc InteractionCancel (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// RPC_ID=30
+
+  // Move To Known Position
+  rpc MoveToKnownPosition (Yikun.Api.Mission.KnownPositionRequest) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=31
+
+  // Move To Position
+  rpc MoveToPositionMission (Yikun.Api.Mission.PositionRequest) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=32
+
+  // Relative Move
+  rpc RelativeMove (Yikun.Api.Mission.RelativeMoveRequest) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=33
+
+  // Relative move cancel
+  // @return Common.StateEnum
+  rpc RelativeMoveCancel (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// RPC_ID=34
+
+  // Switch Map (External)
+  rpc SwitchMap (Yikun.Api.Mission.SwitchMapRequest) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=35
+
+  // Run UR program
+  rpc RunURProgram (Yikun.Api.Mission.URCommand) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=36
+
+  // Load missionlist
+  rpc LoadMission (Yikun.Api.Mission.MissionIdentifier) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=37
+
+  // Abort missionlist
+  rpc AbortMission (Yikun.Api.Mission.MissionIdentifier) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=38
+
+  // Get mission log
+  rpc GetMissionLog (Yikun.Api.Mission.MissionLogCommand) returns (Yikun.Api.Mission.MissionLogFeedback);//@RPC_ID=39
+
+  // Play Sound
+  // @return Common.StateEnum
+  rpc PlaySound (Yikun.Api.Common.SoundCommand) returns (Yikun.Api.Common.CommandFeedback);//@RPC_ID=40
+
+  // DI
+  rpc WaitForDI (Yikun.Api.Mission.WaitDIRequest) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=41
+
+  // DO
+  rpc SetDO (Yikun.Api.Mission.SetDORequest) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=42
+
+  // Position list
+  rpc GetPositionList (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.PositionList);//RPC_ID=43
+
+  // Map list
+  rpc GetMapList (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.MapList);//RPC_ID=44
+
+  // Action list
+  rpc GetActionList (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.ActionList);//RPC_ID=45
+
+  // Device list
+  rpc GetDeviceList(Yikun.Api.Common.Empty) returns (Yikun.Api.Common.DeviceList);//RPC_ID=46
+
+  // Switch map for web
+  // @return Common.StateEnum
+  rpc SwitchMapWeb(Yikun.Api.Common.ProtoInt) returns (Yikun.Api.Common.CommandFeedback);//RPC_ID=47
+
+  // Laser scan
+  rpc GetLaserScan(Yikun.Api.Common.Empty) returns (Yikun.Api.Common.LaserScan);//RPC_ID=48
+
+  // Laser scan to point cloud, global frame is map.
+  rpc GetLaserPointCloud (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.PointCloudXY);//RPC_ID=49
+
+  // PlaySound Exit
+  // @return Common.StateEnum
+  rpc StopCurrentSound (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);//RPC_ID=50
+
+  // Get list of available connections (if it's connected)
+  rpc GetWiFiConnections (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.WiFiConnectionList);//RPC_ID=51
+
+  // NAME,SSID,CHAN,SIGNAL,DEVICE,ACTIVE,IN-USE
+  rpc GetWiFiList (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.WiFiNetworkList);//RPC_ID=52
+
+  // Cleanup networks, if UUID is empty, cleanup all of the connections except current connection
+  // @input UUID
+  // @return Common.StateEnum
+  rpc CleanupNetworks (Yikun.Api.Common.ProtoString) returns (Yikun.Api.Common.CommandFeedback);//RPC_ID=53
+
+  // @return output
+  rpc NetworkConnect (Yikun.Api.Common.WiFiNetworkSecurity) returns (Yikun.Api.Common.ProtoString);//RPC_ID=54
+
+  // Collision Detection
+  // @input Lane
+  // @return true (if it's collision) or false (if it's free)
+  rpc CheckCollision(Yikun.Api.Common.Lane) returns (Yikun.Api.Common.ProtoBool);//RPC_ID=55
+
+  // Trajectory generator
+  // @input Waypoint
+  // @output Trajectory
+  rpc TrajectoryGen(Yikun.Api.Common.PointCloudXY) returns (Yikun.Api.Common.Lane);//RPC_ID=56
+
+  // Stop
+  rpc EStop (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);//RPC_ID=57
+
+  // Get Current Global Plan
+  rpc GetGlobalPlanVIZ (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.Lane);//RPC_ID=58
+
+  // Robot Config
+  rpc SetRobotConfig (Yikun.Api.Common.RobotConfig) returns (Yikun.Api.Common.RobotConfig);//RPC_ID=59
+  // ...
+}
