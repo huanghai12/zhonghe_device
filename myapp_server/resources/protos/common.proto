@@ -18,6 +18,11 @@ message ProtoString {
   string data = 1;
 }
 
+message ModbusStatus {
+  repeated int32 DIs = 1;
+  repeated int32 DOs = 2;
+}
+
 // state
 enum StateEnum {
   PENDING   = 0;
@@ -30,6 +35,59 @@ enum StateEnum {
   RECALLING = 7;
   RECALLED  = 8;
   LOST      = 9;
+}
+
+message PTZCommand {
+    enum PTZEnum {
+        UNKNOWN     = 0;
+        LIGHT_PWRON     = 2;    //接通灯光电源
+        WIPER_PWRON     = 3;    //接通雨刷开关
+        FAN_PWRON       = 4;    //接通风扇开关
+        HEATER_PWRON    = 5;    //接通加热器开关
+        AUX_PWRON1      = 6;    //接通辅助设备开关
+        AUX_PWRON2      = 7;    //接通辅助设备开关
+        ZOOM_IN         = 11;    //焦距以速度SS变大(倍率变大)
+        ZOOM_OUT        = 12;    //焦距以速度SS变小(倍率变小)
+        FOCUS_NEAR      = 13;    // 焦点以速度SS前调
+        FOCUS_FAR       = 14;    // 焦点以速度SS后调
+        IRIS_OPEN       = 15;    // 光圈以速度SS扩大
+        IRIS_CLOSE       = 16;    // 光圈以速度SS缩小
+        TILT_UP     = 21;    // 云台上仰
+        TILT_DOWN   = 22;    // 云台下俯
+        PAN_LEFT    = 23;    // 云台左转
+        PAN_RIGHT   = 24;    // 云台右转
+        UP_LEFT     = 25;    // 云台上仰和左转
+        UP_RIGHT    = 26;    // 云台上仰和右转
+        DOWN_LEFT   = 27;    // 云台下俯和左转
+        DOWN_RIGHT  = 28;    // 云台下俯和右转
+        PAN_AUTO    = 29;    // 云台左右自动扫描
+        TILT_DOWN_ZOOM_IN   = 58;    //云台以SS的速度下俯&&焦距以速度SS变大(倍率变大)
+        TILT_DOWN_ZOOM_OUT  = 59;    // 云台以SS的速度下俯&&焦距以速度SS变小(倍率变小)
+        PAN_LEFT_ZOOM_IN    = 60;    // 云台以SS的速度左转&&焦距以速度SS变大(倍率变大)
+        PAN_LEFT_ZOOM_OUT   = 61;    // 云台以SS的速度左转&&焦距以速度SS变小(倍率变小)
+        PAN_RIGHT_ZOOM_IN   = 62;    // 云台以SS的速度右转&&焦距以速度SS变大(倍率变大)
+        PAN_RIGHT_ZOOM_OUT  = 63;    // 云台以SS的速度右转&&焦距以速度SS变小(倍率变小)
+        UP_LEFT_ZOOM_IN     = 64;    // 云台以SS的速度上仰和左转&&焦距以速度SS变大(倍率变大)
+        UP_LEFT_ZOOM_OUT    = 65;    // 云台以SS的速度上仰和左转&&焦距以速度SS变小(倍率变小)
+        UP_RIGHT_ZOOM_IN    = 66;    // 云台以SS的速度上仰和右转&&焦距以速度SS变大(倍率变大)
+        UP_RIGHT_ZOOM_OUT   = 67;    // 云台以SS的速度上仰和右转&&焦距以速度SS变小(倍率变小)
+        DOWN_LEFT_ZOOM_IN   = 68;    // 云台以SS的速度下俯和左转&&焦距以速度SS变大(倍率变大)
+        DOWN_LEFT_ZOOM_OUT  = 69;    // 云台以SS的速度下俯和左转&&焦距以速度SS变小(倍率变小)
+        DOWN_RIGHT_ZOOM_IN  = 70;    // 云台以SS的速度下俯和右转&&焦距以速度SS变大(倍率变大)
+        DOWN_RIGHT_ZOOM_OUT = 71;    // 云台以SS的速度下俯和右转&&焦距以速度SS变小(倍率变小)
+        TILT_UP_ZOOM_IN     = 72;    //云台以SS的速度上仰&&焦距以速度SS变大(倍率变大)
+        TILT_UP_ZOOM_OUT    = 73;    //云台以SS的速度上仰&&焦距以速度SS变小(倍率变小)
+    }
+    uint32 command  = 1;    // PTZEnum
+    uint32 stop     = 2;    // stop: 1, start: 0
+}
+
+message ImgLocation {
+    int32 xTop    = 1;     //方框起始点的x坐标
+    int32 yTop    = 2;     //方框结束点的y坐标
+    int32 xBottom = 3;     //方框结束点的x坐标
+    int32 yBottom = 4;     //方框结束点的y坐标
+    int32 bCounter= 5;     //保留
 }
 
 enum RobotStateEnum {
@@ -202,7 +260,7 @@ message Diagnostic
   int32 id            = 1;
   string name         = 2;
   string hardware_id  = 3;
-  int32 level         = 4; // LevelEnum
+  string level        = 4; // LevelEnum
   string msg          = 5;
   string first_time   = 6;
   string last_time    = 7;

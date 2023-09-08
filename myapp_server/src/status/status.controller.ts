@@ -1,6 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
 import { StatusService } from './status.service';
-import { stat } from 'fs';
 
 @Controller('status')
 export class StatusController {
@@ -85,6 +84,9 @@ export class StatusController {
         data.splice(i + 1, 1);
       } else if (element.id == 8 || element.id == 9) {
         // DI DO模块
+        
+        // const data6 = await this.statusService.getModbus();
+        // console.log("data6:",data6)
         data[i] = {
           ...element,
           name: element.description,
@@ -148,7 +150,6 @@ export class StatusController {
       }
       i++;
     }
-    // 该数据为虚假数据，后续通过grpc获取
     // 小车状态 state = 1(唤醒)2(唤醒)3(空闲)
     const data4 = await this.statusService.select_roboot();
     const state_list = [
@@ -182,7 +183,7 @@ export class StatusController {
     data.push({
       id: 22,
       name: '小车',
-      arr_type: 'list',
+      arr_type: '',
       arr1: [
         { id: 1, name: '位置', text: `${data5.X.toFixed(2)},${data5.Y.toFixed(2)}` },
         { id: 2, name: '状态', text: state.name },
@@ -190,6 +191,7 @@ export class StatusController {
         { id: 4, name: '角速度', text: data5.Ang },
       ],
     });
+    
     return data;
   }
 }

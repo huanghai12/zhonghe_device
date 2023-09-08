@@ -65,4 +65,7 @@ export class StatusService {
   async select_pos(){
     return await Tasks.RobotInfo();
   }
+  async getModbus() {
+    return await Tasks.GetModbus();
+  }
 }

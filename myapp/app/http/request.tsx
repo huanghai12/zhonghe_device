@@ -7,7 +7,7 @@ if(process.env.NODE_ENV == 'development'){
   urls = 'http://127.0.0.1:7100';
 }
 axios.defaults.baseURL = urls;
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 60000;
 // 请求拦截
 axios.interceptors.request.use(
   config => {
@@ -27,7 +27,8 @@ axios.interceptors.response.use(
     }
   },
   error => {
-    let warn_text = ''
+    let warn_text = '';
+    console.log('requst_err',error);
     if(error.response){
       switch (error.response.status) {
         case 401: //未登录

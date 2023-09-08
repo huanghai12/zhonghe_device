@@ -9,42 +9,6 @@ const client = new RpcService.RpcClient(
   grpc.credentials.createInsecure(),
 );
  const Tasks = {
-  estop: (callback) => {
-    const request = new common.Empty();
-    client.EStop(request, function (response) {
-      if (response) {
-        callback(response);
-      } else {
-        callback(null);
-      }
-    });
-  },
-  StopQRCodePath: (callback) => {
-    const request = new common.Empty();
-    client.StopQRCodePath(request, function (err, response) {
-      if (response) {
-        callback(response);
-      } else {
-        callback(null);
-      }
-    });
-  },
-  RunQRCodePath: (req, callback) => {
-    const request = new common.QRCodePath();
-    // request
-    // string key        = 1;
-    // uint32 task_id    = 2;
-    // repeated QRCode code = 3;
-    request.setKey(req.key);
-    request.setTask_id(req.task_id);
-    client.RunQRCodePath(request, function (err, response) {
-      if (response) {
-        callback(response);
-      } else {
-        callback(null);
-      }
-    });
-  },
     //   获取机器人状态
   GetRobotState: () => {
     const request = new common.Empty();
@@ -76,6 +40,20 @@ const client = new RpcService.RpcClient(
           resolve(result)
         }else{
           reject(err)
+        }
+      })
+    })
+  },
+// 获取DI DO 模块
+  GetModbus: () => {
+    return new Promise ((resolve,reject) => {
+    const request = new common.Empty();
+      client.getModbusStatus(request,(err, response) => {
+        if(response){
+          resolve(response)
+        }else{
+          console.log(err)
+          reject(null)
         }
       })
     })

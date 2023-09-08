@@ -25,11 +25,17 @@ body,p,html{
   background-image: url('../public/png/bg.png');
   width: 100vw;
   height: 100vh; 
-  padding: 10px 46px;
   color: #FFF;
+
+}
+.content>div{
+  /* padding: 10px 0 0px 0; */
   display: flex;
   flex-wrap: wrap;
   font-size: 12px;
+  height: calc(100% - 48px); 
+  padding: 10px 46px;
+
 }
 .title_imgs{
   height: 110px;
@@ -55,8 +61,8 @@ body,p,html{
   margin-right: 8px;
 }
 .par_body{
-  background: rgba(14,51,92,0.4);
-  border: 1px solid rgba(120,240,253,0.7);
+  /* background: rgba(14,51,92,0.4); */
+  /* border: 1px solid rgba(120,240,253,0.7); */
   border-top: 0;
 }
 p{
@@ -64,7 +70,7 @@ p{
 }
 .par1{
   font-size: 12px;
-  border-bottom: 1px solid #3B5372;
+  /* border-bottom: 1px solid #3B5372; */
   padding: 5px;
 }
 .par1>p{
@@ -111,12 +117,14 @@ p{
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+/* 标题图片位置 */
+.title_img1{
+  margin-top: 25px;
+}
 /* 弹窗颜色 */
 :where(.css-dev-only-do-not-override-byeoj0).ant-tooltip .ant-tooltip-inner{
   background: rgba(14,51,92,1) !important;
 }
 :where(.css-dev-only-do-not-override-byeoj0).ant-tooltip .ant-tooltip-arrow:before{
   background: rgba(14,51,92,1) !important;
-
 }

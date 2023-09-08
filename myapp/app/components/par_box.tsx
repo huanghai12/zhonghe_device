@@ -1,4 +1,4 @@
-import icons from '../../public/png/icon.png';
+import titles from '../../public/png/title.png';
 import Image from 'next/image';
 
 function Par_title ({width,height}: any)  {
@@ -105,11 +105,11 @@ function Par_title ({width,height}: any)  {
 export default function Par_box({width,height,name,children}:any) {
   return <>
     <div className='title_icon' >
-        <div>
-          <Image style={{width: '20px', height: '20px'}} src={icons} alt=""></Image>
+        <Image  src={titles} alt=""></Image>
+        <div className='w-[173px] h-[30px] leading-[30px] pl-4' 
+        >
           <span>{name}</span>
         </div>
-        <Par_title width={width} height={height}></Par_title>
     </div>
     <div style={{width: width - 3,marginLeft: '1px'}} className='par_body'>{children}</div>
 

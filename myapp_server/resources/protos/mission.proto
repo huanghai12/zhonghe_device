@@ -65,6 +65,7 @@ message SetDORequest {
   string device     = 2;
   int32 port        = 3;
   int32 value       = 4;
+  float duration    = 5;
 }
 
 //Run UR program

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 // GENERATED CODE -- DO NOT EDIT!
 
 'use strict';
@@ -94,6 +93,17 @@ function deserialize_Yikun_Api_Common_Empty(buffer_arg) {
   return common_pb.Empty.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_Yikun_Api_Common_ImgLocation(arg) {
+  if (!(arg instanceof common_pb.ImgLocation)) {
+    throw new Error('Expected argument of type Yikun.Api.Common.ImgLocation');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_Yikun_Api_Common_ImgLocation(buffer_arg) {
+  return common_pb.ImgLocation.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_Yikun_Api_Common_Lane(arg) {
   if (!(arg instanceof common_pb.Lane)) {
     throw new Error('Expected argument of type Yikun.Api.Common.Lane');
@@ -127,6 +137,17 @@ function deserialize_Yikun_Api_Common_MapList(buffer_arg) {
   return common_pb.MapList.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_Yikun_Api_Common_ModbusStatus(arg) {
+  if (!(arg instanceof common_pb.ModbusStatus)) {
+    throw new Error('Expected argument of type Yikun.Api.Common.ModbusStatus');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_Yikun_Api_Common_ModbusStatus(buffer_arg) {
+  return common_pb.ModbusStatus.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_Yikun_Api_Common_NetDevice(arg) {
   if (!(arg instanceof common_pb.NetDevice)) {
     throw new Error('Expected argument of type Yikun.Api.Common.NetDevice');
@@ -147,6 +168,17 @@ function serialize_Yikun_Api_Common_NetworkConfiguration(arg) {
 
 function deserialize_Yikun_Api_Common_NetworkConfiguration(buffer_arg) {
   return common_pb.NetworkConfiguration.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_Yikun_Api_Common_PTZCommand(arg) {
+  if (!(arg instanceof common_pb.PTZCommand)) {
+    throw new Error('Expected argument of type Yikun.Api.Common.PTZCommand');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_Yikun_Api_Common_PTZCommand(buffer_arg) {
+  return common_pb.PTZCommand.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_Yikun_Api_Common_PeopleMeasurement(arg) {
@@ -487,12 +519,12 @@ var RpcService = exports.RpcService = {
     path: '/Yikun.Api.ServiceRpc.Rpc/CheckCommunication',
     requestStream: false,
     responseStream: false,
-    requestType: common_pb.Empty,
-    responseType: common_pb.CommandFeedback,
-    requestSerialize: serialize_Yikun_Api_Common_Empty,
-    requestDeserialize: deserialize_Yikun_Api_Common_Empty,
-    responseSerialize: serialize_Yikun_Api_Common_CommandFeedback,
-    responseDeserialize: deserialize_Yikun_Api_Common_CommandFeedback,
+    requestType: common_pb.ProtoString,
+    responseType: common_pb.ProtoString,
+    requestSerialize: serialize_Yikun_Api_Common_ProtoString,
+    requestDeserialize: deserialize_Yikun_Api_Common_ProtoString,
+    responseSerialize: serialize_Yikun_Api_Common_ProtoString,
+    responseDeserialize: deserialize_Yikun_Api_Common_ProtoString,
   },
   // @RPC_ID=0
   // Get map
@@ -1292,6 +1324,87 @@ var RpcService = exports.RpcService = {
     responseDeserialize: deserialize_Yikun_Api_Common_RobotConfig,
   },
   // RPC_ID=59
+  // hkvision ptz camera
+  // SetPreset
+  // @input preset num.
+  setPreset: {
+    path: '/Yikun.Api.ServiceRpc.Rpc/SetPreset',
+    requestStream: false,
+    responseStream: false,
+    requestType: common_pb.ProtoInt,
+    responseType: common_pb.CommandFeedback,
+    requestSerialize: serialize_Yikun_Api_Common_ProtoInt,
+    requestDeserialize: deserialize_Yikun_Api_Common_ProtoInt,
+    responseSerialize: serialize_Yikun_Api_Common_CommandFeedback,
+    responseDeserialize: deserialize_Yikun_Api_Common_CommandFeedback,
+  },
+  // RPC_ID=60
+  // MoveToPreset
+  // @input preset num.
+  moveToPreset: {
+    path: '/Yikun.Api.ServiceRpc.Rpc/MoveToPreset',
+    requestStream: false,
+    responseStream: false,
+    requestType: common_pb.ProtoInt,
+    responseType: common_pb.CommandFeedback,
+    requestSerialize: serialize_Yikun_Api_Common_ProtoInt,
+    requestDeserialize: deserialize_Yikun_Api_Common_ProtoInt,
+    responseSerialize: serialize_Yikun_Api_Common_CommandFeedback,
+    responseDeserialize: deserialize_Yikun_Api_Common_CommandFeedback,
+  },
+  // RPC_ID=61
+  // ptz location
+  pTZLocation: {
+    path: '/Yikun.Api.ServiceRpc.Rpc/PTZLocation',
+    requestStream: false,
+    responseStream: false,
+    requestType: common_pb.ImgLocation,
+    responseType: common_pb.CommandFeedback,
+    requestSerialize: serialize_Yikun_Api_Common_ImgLocation,
+    requestDeserialize: deserialize_Yikun_Api_Common_ImgLocation,
+    responseSerialize: serialize_Yikun_Api_Common_CommandFeedback,
+    responseDeserialize: deserialize_Yikun_Api_Common_CommandFeedback,
+  },
+  // RPC_ID=62
+  // ptz control
+  pTZControl: {
+    path: '/Yikun.Api.ServiceRpc.Rpc/PTZControl',
+    requestStream: false,
+    responseStream: false,
+    requestType: common_pb.PTZCommand,
+    responseType: common_pb.CommandFeedback,
+    requestSerialize: serialize_Yikun_Api_Common_PTZCommand,
+    requestDeserialize: deserialize_Yikun_Api_Common_PTZCommand,
+    responseSerialize: serialize_Yikun_Api_Common_CommandFeedback,
+    responseDeserialize: deserialize_Yikun_Api_Common_CommandFeedback,
+  },
+  // RPC_ID=63
+  // Modbus IO status
+  getModbusStatus: {
+    path: '/Yikun.Api.ServiceRpc.Rpc/GetModbusStatus',
+    requestStream: false,
+    responseStream: false,
+    requestType: common_pb.Empty,
+    responseType: common_pb.ModbusStatus,
+    requestSerialize: serialize_Yikun_Api_Common_Empty,
+    requestDeserialize: deserialize_Yikun_Api_Common_Empty,
+    responseSerialize: serialize_Yikun_Api_Common_ModbusStatus,
+    responseDeserialize: deserialize_Yikun_Api_Common_ModbusStatus,
+  },
+  // RPC_ID=64
+  // external DO8
+  setDOEx: {
+    path: '/Yikun.Api.ServiceRpc.Rpc/SetDOEx',
+    requestStream: false,
+    responseStream: false,
+    requestType: mission_pb.SetDORequest,
+    responseType: mission_pb.MissionFeedback,
+    requestSerialize: serialize_Yikun_Api_Mission_SetDORequest,
+    requestDeserialize: deserialize_Yikun_Api_Mission_SetDORequest,
+    responseSerialize: serialize_Yikun_Api_Mission_MissionFeedback,
+    responseDeserialize: deserialize_Yikun_Api_Mission_MissionFeedback,
+  },
+  // @RPC_ID=65
 };
 
 exports.RpcClient = grpc.makeGenericClientConstructor(RpcService);

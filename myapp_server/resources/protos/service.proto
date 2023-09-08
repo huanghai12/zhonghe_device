@@ -10,7 +10,7 @@ package Yikun.Api.ServiceRpc;
 service Rpc {
   // Check
   // @return Common.StateEnum
-  rpc CheckCommunication (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.CommandFeedback);// @RPC_ID=0
+  rpc CheckCommunication (Yikun.Api.Common.ProtoString) returns (Yikun.Api.Common.ProtoString);// @RPC_ID=0
 
   // Get map
   rpc GetCurrentMap (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.ProtoMap);// @RPC_ID=1
@@ -218,5 +218,27 @@ service Rpc {
 
   // Robot Config
   rpc SetRobotConfig (Yikun.Api.Common.RobotConfig) returns (Yikun.Api.Common.RobotConfig);//RPC_ID=59
+
+  // hkvision ptz camera
+  // SetPreset
+  // @input preset num.
+  rpc SetPreset (Yikun.Api.Common.ProtoInt) returns (Yikun.Api.Common.CommandFeedback);//RPC_ID=60
+
+  // MoveToPreset
+  // @input preset num.
+  rpc MoveToPreset (Yikun.Api.Common.ProtoInt) returns (Yikun.Api.Common.CommandFeedback);//RPC_ID=61
+
+  // ptz location
+  rpc PTZLocation (Yikun.Api.Common.ImgLocation) returns (Yikun.Api.Common.CommandFeedback);//RPC_ID=62
+
+  // ptz control
+  rpc PTZControl (Yikun.Api.Common.PTZCommand) returns (Yikun.Api.Common.CommandFeedback);//RPC_ID=63
+
+  // Modbus IO status
+  rpc GetModbusStatus (Yikun.Api.Common.Empty) returns (Yikun.Api.Common.ModbusStatus);//RPC_ID=64
+
+  // external DO8
+  rpc SetDOEx (Yikun.Api.Mission.SetDORequest) returns (Yikun.Api.Mission.MissionFeedback);//@RPC_ID=65
   // ...
+
 }

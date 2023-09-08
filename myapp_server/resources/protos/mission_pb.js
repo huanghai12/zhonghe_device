@@ -1852,7 +1852,8 @@ proto.Yikun.Api.Mission.SetDORequest.toObject = function(includeInstance, msg) {
     priority: jspb.Message.getFieldWithDefault(msg, 1, 0),
     device: jspb.Message.getFieldWithDefault(msg, 2, ""),
     port: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    value: jspb.Message.getFieldWithDefault(msg, 4, 0)
+    value: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    duration: jspb.Message.getFloatingPointFieldWithDefault(msg, 5, 0.0)
   };
 
   if (includeInstance) {
@@ -1904,6 +1905,10 @@ proto.Yikun.Api.Mission.SetDORequest.deserializeBinaryFromReader = function(msg,
     case 4:
       var value = /** @type {number} */ (reader.readInt32());
       msg.setValue(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setDuration(value);
       break;
     default:
       reader.skipField();
@@ -1959,6 +1964,13 @@ proto.Yikun.Api.Mission.SetDORequest.serializeBinaryToWriter = function(message,
   if (f !== 0) {
     writer.writeInt32(
       4,
+      f
+    );
+  }
+  f = message.getDuration();
+  if (f !== 0.0) {
+    writer.writeFloat(
+      5,
       f
     );
   }
@@ -2034,6 +2046,24 @@ proto.Yikun.Api.Mission.SetDORequest.prototype.getValue = function() {
  */
 proto.Yikun.Api.Mission.SetDORequest.prototype.setValue = function(value) {
   return jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional float duration = 5;
+ * @return {number}
+ */
+proto.Yikun.Api.Mission.SetDORequest.prototype.getDuration = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 5, 0.0));
+};
+
+
+/**
+ * @param {number} value
+ * @return {!proto.Yikun.Api.Mission.SetDORequest} returns this
+ */
+proto.Yikun.Api.Mission.SetDORequest.prototype.setDuration = function(value) {
+  return jspb.Message.setProto3FloatField(this, 5, value);
 };
 
 
